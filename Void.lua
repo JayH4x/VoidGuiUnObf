@@ -2,6 +2,28 @@
 -- By Nexxor#1824
 
 
+--[[
+ /$$    /$$  /$$$$$$  /$$$$$$ /$$$$$$$ 
+| $$   | $$ /$$__  $$|_  $$_/| $$__  $$
+| $$   | $$| $$  \ $$  | $$  | $$  \ $$
+|  $$ / $$/| $$  | $$  | $$  | $$  | $$
+ \  $$ $$/ | $$  | $$  | $$  | $$  | $$
+  \  $$$/  | $$  | $$  | $$  | $$  | $$
+   \  $/   |  $$$$$$/ /$$$$$$| $$$$$$$/
+    \_/     \______/ |______/|_______/ 
+]]
+--[[
+         .-') _   ('-.  ) (`-.     ) (`-.                 _  .-')   
+    ( OO ) )_(  OO)  ( OO ).    ( OO ).              ( \( -O )  
+,--./ ,--,'(,------.(_/.  \_)-.(_/.  \_)-..-'),-----. ,------.  
+|   \ |  |\ |  .---' \  `.'  /  \  `.'  /( OO'  .-.  '|   /`. ' 
+|    \|  | )|  |      \     /\   \     /\/   |  | |  ||  /  | | 
+|  .     |/(|  '--.    \   \ |    \   \ |\_) |  |\|  ||  |_.' | 
+|  |\    |  |  .--'   .'    \_)  .'    \_) \ |  | |  ||  .  '.' 
+|  | \   |  |  `---. /  .'.  \  /  .'.  \   `'  '-'  '|  |\  \  
+`--'  `--'  `------''--'   '--''--'   '--'    `-----' `--' '--' 
+]]
+
 function noti(text)
     game.StarterGui:SetCore("SendNotification", {
         Title = "Void GUI"; 
@@ -9,6 +31,11 @@ function noti(text)
         Duration = 5;
     })
 end
+noti("Welcome To Void GUI v2.0")
+wait(0.5)
+noti("Please Wait Until Fully Loaded...")
+wait(1)
+noti("Loaded! Made By Nexxor#1824")
 
 function ArrestAll()
     spawn(function()
@@ -64,9 +91,12 @@ function PoliceTP()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(838.245361, 99.9899826, 2307.9397)
     end)
 end
-function crimtp()
+function crim()
     spawn(function()
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-975.896118, 109.323769, 2061.90405)
+        local head = game.Players.LocalPlayer.Character.Head
+        firetouchinterest(head, game:GetService("Workspace")["Criminals Spawn"].SpawnLocation, 0)
+        wait(0.02)
+        firetouchinterest(head, game:GetService("Workspace")["Criminals Spawn"].SpawnLocation, 1)
     end)
 end
 function crimbase()
@@ -118,7 +148,7 @@ end
 
 -- Libary Properties
     local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-    local Window = Library.CreateLib("Void Gui", "BloodTheme")
+    local Window = Library.CreateLib("Void Gui v2.0", "BloodTheme")
 --
 
 -- TABS
@@ -131,6 +161,7 @@ end
 -- Sections
     local Section = Main:NewSection("Main")
     local Section2 = Main:NewSection("Player Mods")
+    local Teams = Main:NewSection("Change Teams")
     local Section3 = Main:NewSection("Misc")
 --
 
@@ -152,6 +183,12 @@ end)
 Section2:NewButton("Jumppower -10", "Removes 10 From Your Jumppower", function()
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = game.Players.LocalPlayer.Character.Humanoid.JumpPower - 10
 end)
+Section2:NewButton("Hip Height +1", "Jesus...", function()
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = game.Players.LocalPlayer.Character.Humanoid.HipHeight + 1
+end)
+Section2:NewButton("Hip Height -1", "Jesus...", function()
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = game.Players.LocalPlayer.Character.Humanoid.HipHeight - 1
+end)
 Section2:NewButton("Infinite Jump", "AKA Air Jump", function()
 local Player = game:GetService'Players'.LocalPlayer;
 local UIS = game:GetService'UserInputService';
@@ -171,9 +208,6 @@ UIS.InputBegan:connect(function(UserInput)
         end)
     end
 end)
-end)
-Section3:NewButton("Become Criminal", "Makes You A Criminal Instantly", function()
-    crimtp()
 end)
 local acuseplyr
 Section3:NewTextBox("Acuser", "Acuse A Player Of Hacking", function(plyr)
@@ -209,6 +243,10 @@ Section:NewButton("Netural Spawn", "Teleports To Netural Spawn aka Safe Place", 
     nspawn()
     noti("Teleported!")
 end)
+Section:NewButton("Secret Warehouse", "Not Many People Know About This Place ;)", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-920, 95, 1990)
+    noti("Teleported!")
+end)
 local playerto
 Section:NewTextBox("Teleport To A Player", "Teleports To A Player? -_-", function(txt)
 	noti("Player Set")
@@ -229,6 +267,32 @@ end)
 --
 Section:NewButton("Arrest All", "Arrest Every Criminal (even if your not police ;)  )", function()
     ArrestAll()
+end)
+Teams:NewButton("Criminal", "Arrest Every Criminal (even if your not police ;)  )", function()
+    crim()
+end)
+Teams:NewButton("Police", "Change Team To Police", function()
+workspace.Remote.TeamEvent:FireServer("Bright blue")
+end)
+Teams:NewButton("Inmate", "Change Team To Inmate", function()
+workspace.Remote.TeamEvent:FireServer("Bright orange")
+end)
+Teams:NewButton("Neutral", "Change Team To Neutral", function()
+workspace.Remote.TeamEvent:FireServer("Medium stone grey")
+end)
+Teams:NewButton("Red", "Change Name Color To Red", function()
+    local savedcf = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    local savedcamcf = workspace.CurrentCamera.CFrame
+    game.workspace.Remote.loadchar:InvokeServer(nil, BrickColor.new("Bright red").Name)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedcf
+    game.workspace.CurrentCamera.CFrame = savedcamcf
+end)
+Teams:NewButton("Purple", "Change Name Color To Purple", function()
+    local savedcf = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    local savedcamcf = workspace.CurrentCamera.CFrame
+    game.workspace.Remote.loadchar:InvokeServer(nil, BrickColor.new("Royal purple").Name)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedcf
+    game.workspace.CurrentCamera.CFrame = savedcamcf
 end)
 
 -- Credits
